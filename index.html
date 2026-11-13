@@ -625,17 +625,29 @@ function authScreen(inner){
   $('#root').innerHTML=`<div class="auth"><div class="card authc"><div class="mark" style="width:40px;height:40px;font-size:14px;border-radius:12px">CF</div>${inner}</div></div>`;
 }
 function loginScreen(sb){
-  authScreen(`<h1>Cash Flow Pod Tracker</h1><p>Sign in with your work email. We will send you a one time link.</p>
+  authScreen(`<h1>Cash Flow Pod Tracker</h1><p>Sign in with your work email and password.</p>
     <div class="fld"><input id="lEmail" type="email" placeholder="name@tgg-accounting.com" autocomplete="email"></div>
-    <div style="height:12px"></div><button class="btn primary" id="lGo">Send sign in link</button><div class="msg" id="lMsg"></div>`);
+    <div style="height:10px"></div>
+    <div class="fld"><input id="lPass" type="password" placeholder="Password" autocomplete="current-password"></div>
+    <div style="height:12px"></div><button class="btn primary" id="lGo">Sign in</button>
+    <div class="msg"><a href="#" id="lLink" style="color:var(--brand)">Email me a sign in link instead</a></div>
+    <div class="msg" id="lMsg"></div>`);
+  const msg=t=>$('#lMsg').textContent=t;
   const go=async()=>{
-    const email=$('#lEmail').value.trim(); if(!email) return;
-    $('#lGo').disabled=true; $('#lMsg').textContent='Sending…';
-    const {error}=await sb.auth.signInWithOtp({email,options:{shouldCreateUser:true,emailRedirectTo:location.origin+location.pathname}});
+    const email=$('#lEmail').value.trim(), password=$('#lPass').value; if(!email||!password){msg('Enter your email and password.');return;}
+    $('#lGo').disabled=true; msg('Signing in…');
+    const {error}=await sb.auth.signInWithPassword({email,password});
     $('#lGo').disabled=false;
-    $('#lMsg').textContent=error?`Could not send the link: ${error.message}`:`Check ${email}. Open the link on this device to sign in.`;
+    if(error){msg(error.message==='Invalid login credentials'?'Wrong email or password.':`Could not sign in: ${error.message}`);return;}
+    location.reload();
   };
-  $('#lGo').onclick=go; $('#lEmail').onkeydown=e=>{if(e.key==='Enter')go();};
+  $('#lLink').onclick=async e=>{
+    e.preventDefault(); const email=$('#lEmail').value.trim(); if(!email){msg('Enter your email first.');return;}
+    msg('Sending…');
+    const {error}=await sb.auth.signInWithOtp({email,options:{shouldCreateUser:false,emailRedirectTo:location.origin+location.pathname}});
+    msg(error?`Could not send the link: ${error.message}`:`Check ${email}. Open the link on this device to sign in.`);
+  };
+  $('#lGo').onclick=go; $('#lPass').onkeydown=e=>{if(e.key==='Enter')go();};
 }
 async function boot(){
   if(!CFG.supabaseUrl||!CFG.supabaseAnonKey||!window.supabase){
