@@ -14,7 +14,7 @@
   --brand:#3b5bdb; --brand2:#7048e8; --brandink:#ffffff; --ring:rgba(59,91,219,.25);
   --ok:#0f9d63; --okbg:#e3f6ee; --warn:#b76e00; --warnbg:#fff4e0; --bad:#d23b2f; --badbg:#fdebe9; --info:#3b5bdb; --infobg:#eaefff;
   --sh1:0 1px 2px rgba(17,24,39,.05),0 1px 3px rgba(17,24,39,.04); --sh2:0 12px 32px rgba(17,24,39,.10),0 2px 6px rgba(17,24,39,.06);
-  --s0:#7c5cdb; --s1:#3b5bdb; --s2:#0c95a8; --s3:#d38b00; --s4:#e0602b; --s5:#0f9d63;
+  --s0:#7c5cdb; --s1:#3b5bdb; --s2:#0c95a8; --s3:#d38b00; --s4:#5f3dc4; --s5:#c2255c; --s6:#e0602b; --s7:#a85d00; --s8:#0f9d63;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
@@ -22,7 +22,7 @@
     --brand:#7b96f5; --brand2:#a68af5; --brandink:#0c0e13; --ring:rgba(123,150,245,.3);
     --ok:#46c98d; --okbg:#10291e; --warn:#f2b552; --warnbg:#2e220d; --bad:#f37d72; --badbg:#36150f; --info:#7b96f5; --infobg:#18213d;
     --sh1:0 1px 2px rgba(0,0,0,.4); --sh2:0 16px 40px rgba(0,0,0,.55);
-    --s0:#a68af5; --s1:#7b96f5; --s2:#3cc6d8; --s3:#f2b552; --s4:#f58c5c; --s5:#46c98d;
+    --s0:#a68af5; --s1:#7b96f5; --s2:#3cc6d8; --s3:#f2b552; --s4:#a594f9; --s5:#f06595; --s6:#f58c5c; --s7:#e0a458; --s8:#46c98d;
   }
 }
 *{box-sizing:border-box}
@@ -86,7 +86,7 @@ button{font:inherit;color:inherit}
 /* pipeline bar */
 .pbar{display:flex;height:12px;border-radius:999px;overflow:hidden;background:var(--soft);gap:2px}
 .pbar span{display:block;height:100%}
-.plg{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:16px}
+.plg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:16px}
 .plg div{font-size:12px;color:var(--muted)}
 .plg b{display:block;font-size:20px;color:var(--ink);font-weight:700;margin-top:2px}
 
@@ -126,7 +126,7 @@ button{font:inherit;color:inherit}
 .mini{font-size:11px;padding:2px 8px;border-radius:999px;font-weight:600}
 
 /* board */
-.board{display:grid;grid-template-columns:repeat(6,minmax(172px,1fr));gap:12px;overflow-x:auto;padding-bottom:6px}
+.board{display:grid;grid-template-columns:repeat(9,minmax(210px,1fr));gap:12px;overflow-x:auto;padding-bottom:6px}
 .col{background:var(--bg2);border-radius:13px;padding:10px;min-height:300px;display:flex;flex-direction:column;gap:9px;border:1px solid transparent;transition:border-color .12s,background .12s}
 .col.over{border-color:var(--brand);background:color-mix(in srgb,var(--brand) 6%,var(--bg2))}
 .colh{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;padding:4px 4px 6px}
@@ -274,6 +274,28 @@ td .ln{font-size:12.5px;color:var(--muted);max-width:260px}
 .tmr .rl{white-space:nowrap}
 @media (max-width:700px){.qadd{grid-template-columns:1fr 1fr}.qadd input#qText{grid-column:1/-1}}
 
+.plg .pill,td .pill,.tclients .pill{white-space:normal;line-height:1.3}
+.plg .pill i{margin-top:5px;align-self:flex-start}
+.opt{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;white-space:nowrap}
+.opt.o1{background:#e3e8f5;color:#1f3a7a}.opt.o2{background:#dfeefa;color:#1c5a99}.opt.o3{background:#dcf3ea;color:#0d7f64}.opt.o4{background:#f3e8fd;color:#7048e8}
+.sol{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.sol button{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12.5px;text-align:center}
+.sol button span{font-size:10.5px;color:var(--muted);line-height:1.2}
+.sol button.on{border-color:var(--brand);background:var(--infobg);color:var(--brand)}
+.addrow{display:flex;gap:8px;margin-bottom:14px;align-items:flex-start}
+.addrow input,.addrow textarea,.task.editing input{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:9px 11px;min-width:0}
+.addrow input:not([type=date]),.addrow textarea{flex:1}
+.addrow input[type=date]{flex:0 0 140px}
+.addrow textarea{resize:vertical;min-height:42px}
+.addrow input:focus,.addrow textarea:focus,.task.editing input:focus,.pad:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--ring);outline:none}
+.task.editing{gap:8px}
+.task.editing #eText{flex:1}
+.task .tx1[data-edittask]{cursor:text;border-radius:4px}
+.task .tx1[data-edittask]:hover{background:var(--soft)}
+.pad{width:100%;min-height:150px;font:inherit;font-size:14px;line-height:1.5;border:1px solid var(--line);background:#fffdf5;color:var(--ink);border-radius:10px;padding:10px 12px;resize:vertical}
+@media (prefers-color-scheme:dark){.pad{background:var(--card)}}
+@media (max-width:700px){.sol{grid-template-columns:repeat(3,1fr)}.addrow{flex-wrap:wrap}.addrow input[type=date]{flex:1 0 120px}}
+
 /* auth */
 .auth{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(1200px 500px at 50% -10%,color-mix(in srgb,var(--brand) 16%,transparent),transparent),var(--bg)}
 .authc{width:100%;max-width:400px;padding:30px}
@@ -286,7 +308,7 @@ td .ln{font-size:12.5px;color:var(--muted);max-width:260px}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 #print{display:none}
 
-@media (max-width:980px){.g4{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:minmax(0,1fr)}.plg{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:980px){.g4{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:700px){
   .topin{gap:10px;padding:0 16px;height:auto;flex-wrap:wrap;padding-top:10px}
   .nav{order:3;width:100%;height:44px;overflow-x:auto}
@@ -327,8 +349,8 @@ td .ln{font-size:12.5px;color:var(--muted);max-width:260px}
 <script>
 /* ---------- constants ---------- */
 const CFG = window.TRACKER_CONFIG || {};
-const STAGES = ['In progress','Draft sent','Follow up','Meeting scheduled','Testing','Implemented'];
-const SVAR = ['--s0','--s1','--s2','--s3','--s4','--s5'];
+const STAGES = ['Requested info','Info received, assigned to the team','First draft sent','Follow up','Sent new version','Need to host','Testing','Testing, follow up','Implemented'];
+const SVAR = ['--s0','--s1','--s2','--s3','--s4','--s5','--s6','--s7','--s8'];
 const AV = ['#3b5bdb','#7048e8','#0c95a8','#d9480f','#2b8a3e','#c2255c','#5f3dc4','#e67700'];
 const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const ICON = {
@@ -345,7 +367,7 @@ const ICON = {
 
 /* ---------- state ---------- */
 let S = {team:[], clients:[], notes:[], tasks:[], meetings:[]};
-let UI = {tab:'overview', f:{q:'',stage:'',owner:'',action:''}, sort:{key:'next',dir:1}, drag:null, modal:null};
+let UI = {tab:'overview', f:{q:'',stage:'',owner:'',action:'',sol:''}, sort:{key:'next',dir:1}, drag:null, modal:null};
 let DB = null, USER = null, DEMO = false, D = null;
 try{ const t=localStorage.getItem('cfpod_tab'); if(['overview','board','clients','team'].includes(t)) UI.tab=t; }catch(e){}
 
@@ -358,6 +380,13 @@ const today = () => { const n=new Date(); return new Date(n.getFullYear(),n.getM
 const fmt = s => { const d=pd(s); return d?`${MON[d.getMonth()]} ${d.getDate()}`:''; };
 const fmtY = s => { const d=pd(s); return d?`${MON[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`:''; };
 const sv = st => `var(${SVAR[Math.max(0,STAGES.indexOf(st))]})`;
+const stageNo = st => STAGES.indexOf(st)+1;
+const stageLabel = st => `${stageNo(st)||'?'}. ${st}`;
+const SOLUTIONS = {1:'Live dashboard',2:'Upload dashboard',3:'Claude skill',4:''};
+const solLabel = n => n?`Option ${n}${SOLUTIONS[n]?' · '+SOLUTIONS[n]:''}`:'Not decided';
+const solTag = n => n?`<span class="opt o${n}" title="${esc(solLabel(n))}">Option ${n}</span>`:'';
+const LEGACY = {'In progress':'Info received, assigned to the team','Draft sent':'First draft sent','Meeting scheduled':'Follow up'};
+function fix(d){ (d.clients||[]).forEach(c=>{ if(LEGACY[c.stage]) c.stage=LEGACY[c.stage]; if(!STAGES.includes(c.stage)) c.stage=STAGES[0]; if(c.notepad==null) c.notepad=''; }); return d; }
 const uid = () => (crypto.randomUUID?crypto.randomUUID():String(Date.now()+Math.random()));
 const nowIso = () => new Date().toISOString();
 const byId = id => S.clients.find(c=>c.id===id);
@@ -365,7 +394,7 @@ function avColor(n){ const i=S.team.findIndex(t=>t.name===n); if(i>=0) return AV
 function ini(n){ return n.split(/[\s.@]+/).filter(Boolean).map(p=>p[0]).join('').slice(0,2).toUpperCase(); }
 function av(n,lg){ return n?`<span class="av ${lg?'lg':''}" style="background:${avColor(n)}">${esc(ini(n))}</span>`:`<span class="av un ${lg?'lg':''}">?</span>`; }
 function own(n){ return n?`<span class="own">${av(n)}${esc(n)}</span>`:`<span class="own un">${av('')}Unassigned</span>`; }
-function pill(st){ return `<span class="pill" style="background:color-mix(in srgb,${sv(st)} 13%,transparent);color:${sv(st)}"><i style="background:${sv(st)}"></i>${esc(st)}</span>`; }
+function pill(st){ return `<span class="pill" style="background:color-mix(in srgb,${sv(st)} 13%,transparent);color:${sv(st)}"><i style="background:${sv(st)}"></i>${esc(stageLabel(st))}</span>`; }
 function dueOfDate(s){
   const d=pd(s); if(!d) return null;
   const n=Math.round((d-today())/864e5);
@@ -399,15 +428,15 @@ function setSync(s){ const e=$('#sync'); if(!e) return; e.className='sync '+(s||
 const SEED = (()=>{
   const t=[{name:'Sofi',role:'Lead',sort:1,hours_per_week:null,max_clients:null},{name:'Miraluna',role:'Team',sort:2,hours_per_week:15,max_clients:3},{name:'Walter',role:'Team',sort:3,hours_per_week:20,max_clients:3},{name:'Jose',role:'Team',sort:4,hours_per_week:10,max_clients:2}].map(x=>({id:uid(),availability_note:'',...x}));
   const rows=[
-    ['360BGC','Jose','In progress','Jose is working on it, his own client','',null,'2026-11-12','Jose is working on this client (his own client)'],
-    ['Crew Marketing Partners','Miraluna','Draft sent','Miraluna sent the first draft','Follow up on the first draft','2026-11-18','2026-11-12','Miraluna sent the first draft'],
-    ['Hardison Medical','Sofi','Testing','Sent draft on 11/10','Follow up','2026-11-13','2026-11-10','Sent draft'],
+    ['360BGC','Jose','Info received, assigned to the team','Jose is working on it, his own client','',null,'2026-11-12','Jose is working on this client (his own client)'],
+    ['Crew Marketing Partners','Miraluna','First draft sent','Miraluna sent the first draft','Follow up on the first draft','2026-11-18','2026-11-12','Miraluna sent the first draft',3],
+    ['Hardison Medical','Sofi','Testing','Sent draft on 11/10','Follow up','2026-11-13','2026-11-10','Sent draft',1],
     ['SilverHawk','Sofi','Follow up','Followed up on 11/12','',null,'2026-11-12','Followed up'],
-    ['575 Pizzeria','Miraluna','Meeting scheduled','Meeting scheduled on 11/13','Meeting','2026-11-13','2026-11-12','Meeting scheduled on 11/13'],
-    ['WIN Brands','Sofi','Testing','Implemented, testing phase','',null,'2026-11-12','Implemented, testing phase'],
-    ['Restorative Injectables','Sofi','Implemented','Implemented','',null,'2026-11-12','Implemented']];
+    ['575 Pizzeria','Miraluna','Follow up','Meeting scheduled on 11/13','Meeting','2026-11-13','2026-11-12','Meeting scheduled on 11/13'],
+    ['WIN Brands','Sofi','Testing','Implemented, testing phase','',null,'2026-11-12','Implemented, testing phase',1],
+    ['Restorative Injectables','Sofi','Implemented','Implemented','',null,'2026-11-12','Implemented',1]];
   const c=[],n=[],k=[];
-  rows.forEach((r,i)=>{const id=uid();c.push({id,name:r[0],owner:r[1],stage:r[2],status:r[3],sort_order:(i+1)*10});n.push({id:uid(),client_id:id,date:r[6],text:r[7],created_at:nowIso()});if(r[4])k.push({id:uid(),client_id:id,text:r[4],due_date:r[5],done:false,done_at:null,created_at:nowIso()});});
+  rows.forEach((r,i)=>{const id=uid();c.push({id,name:r[0],owner:r[1],stage:r[2],status:r[3],solution:r[8]||null,notepad:'',sort_order:(i+1)*10});n.push({id:uid(),client_id:id,date:r[6],text:r[7],created_at:nowIso()});if(r[4])k.push({id:uid(),client_id:id,text:r[4],due_date:r[5],done:false,done_at:null,created_at:nowIso()});});
   return {team:t,clients:c,notes:n,tasks:k,meetings:[]};
 })();
 
@@ -418,12 +447,13 @@ const Demo = {
   async deleteNote(){}, async saveOrders(){},
   async saveTask(t){ return {...t,id:t.id||uid(),created_at:t.created_at||nowIso()}; }, async deleteTask(){},
   async saveMeeting(m){ return {...m,id:m.id||uid(),created_at:m.created_at||nowIso()}; }, async deleteMeeting(){},
-  async saveMember(m){ return {...m}; }, subscribe(){}
+  async saveMember(m){ return {...m,id:m.id||uid()}; }, async deleteMember(){}, async renameOwner(){}, async clearOwner(){},
+  async saveClientField(id,patch){ return {...byId(id),...patch}; }, subscribe(){}
 };
 
 function Supa(sb){
   const chk = r => { if(r.error) throw r.error; return r.data; };
-  const clean = c => ({name:c.name,owner:c.owner||null,stage:c.stage,status:c.status||'',sort_order:c.sort_order||0});
+  const clean = c => ({name:c.name,owner:c.owner||null,stage:c.stage,status:c.status||'',solution:c.solution||null,sort_order:c.sort_order||0});
   const up = async (table,id,row) => id ? chk(await sb.from(table).update(row).eq('id',id).select().single()) : chk(await sb.from(table).insert(row).select().single());
   return {
     async load(){
@@ -444,7 +474,11 @@ function Supa(sb){
     async deleteTask(id){ chk(await sb.from('tracker_tasks').delete().eq('id',id)); },
     saveMeeting(m){ return up('tracker_meetings',m.id,{client_id:m.client_id,date:m.date,title:m.title||'',notes:m.notes||''}); },
     async deleteMeeting(id){ chk(await sb.from('tracker_meetings').delete().eq('id',id)); },
-    saveMember(m){ return up('tracker_team',m.id,{hours_per_week:m.hours_per_week,max_clients:m.max_clients,availability_note:m.availability_note||''}); },
+    saveMember(m){ return up('tracker_team',m.id,{name:m.name,role:m.role||'Team',hours_per_week:m.hours_per_week,max_clients:m.max_clients,availability_note:m.availability_note||'',...(m.id?{}:{sort:m.sort||0})}); },
+    async deleteMember(id){ chk(await sb.from('tracker_team').delete().eq('id',id)); },
+    async renameOwner(o,n){ chk(await sb.from('tracker_clients').update({owner:n}).eq('owner',o)); },
+    async clearOwner(o){ chk(await sb.from('tracker_clients').update({owner:null}).eq('owner',o)); },
+    async saveClientField(id,patch){ return chk(await sb.from('tracker_clients').update(patch).eq('id',id).select().single()); },
     subscribe(cb){
       let h; const f=()=>{clearTimeout(h);h=setTimeout(cb,350);};
       let ch=sb.channel('tracker');
@@ -459,7 +493,7 @@ async function persist(fn){
   try{ const r=await fn(); setSync(''); return r; }
   catch(e){ console.error(e); setSync('err'); toast('Could not save: '+(e.message||e)); await reload(); throw e; }
 }
-async function reload(){ try{ S=await DB.load(); refreshAll(); }catch(e){ console.error(e); } }
+async function reload(){ try{ S=fix(await DB.load()); refreshAll(); }catch(e){ console.error(e); } }
 function refreshAll(){ render(); if(D&&D.c.id&&byId(D.c.id)) drawLists(); if(UI.modal) drawModal(); }
 
 /* ---------- shell ---------- */
@@ -514,7 +548,7 @@ function taskRow(t,inClient){
   const right = t.done ? `<span class="tdone">Done ${t.done_at?fmt(t.done_at.slice(0,10)):''}</span>` : (dueHtmlD(t.due_date)||'<span class="due later">No date</span>');
   return `<div class="task ${t.done?'done':''}" data-task="${t.id}">
     <button class="cb ${t.done?'on':''}" data-toggle="${t.id}" title="${t.done?'Mark as not done':'Mark as done'}" aria-label="${t.done?'Mark as not done':'Mark as done'}">${ICON.check}</button>
-    <div class="tt"><div class="tx1">${esc(t.text)}</div>${!inClient&&c?`<div class="tcl"><a data-open="${c.id}" data-tabto="todos">${esc(c.name)}</a>${c.owner?` · ${esc(c.owner)}`:''}</div>`:''}</div>
+    <div class="tt"><div class="tx1" ${inClient&&!t.done?`data-edittask="${t.id}" title="Click to edit"`:''}>${esc(t.text)}</div>${!inClient&&c?`<div class="tcl"><a data-open="${c.id}" data-tabto="todos">${esc(c.name)}</a>${c.owner?` · ${esc(c.owner)}`:''}</div>`:''}</div>
     ${right}${inClient?`<button class="x" data-deltask="${t.id}" title="Delete to-do">×</button>`:''}
   </div>`;
 }
@@ -530,14 +564,14 @@ function vOverview(){
   const open=openTasks();
   const hello = (()=>{const h=new Date().getHours();return h<12?'Good morning':h<19?'Good afternoon':'Good evening';})();
   const kpi=(key,l,v,c,ic,col,alert)=>`<button class="card kpi click ${alert?'alert':''}" data-kpi="${key}"><div class="l"><span class="ic" style="background:color-mix(in srgb,${col} 14%,transparent);color:${col}">${ic}</span>${l}</div><div class="v">${v}</div><div class="c">${c}</div></button>`;
-  const seg=STAGES.map(s=>{const k=C.filter(c=>c.stage===s).length;return k?`<span style="flex:${k};background:${sv(s)}" title="${esc(s)}: ${k}"></span>`:'';}).join('');
-  const lg=STAGES.map(s=>`<div><span class="pill" style="padding:0;background:none;color:var(--muted);font-weight:500"><i style="background:${sv(s)}"></i>${esc(s)}</span><b>${C.filter(c=>c.stage===s).length}</b></div>`).join('');
+  const seg=STAGES.map(s=>{const k=C.filter(c=>c.stage===s).length;return k?`<span style="flex:${k};background:${sv(s)}" title="${esc(stageLabel(s))}: ${k}"></span>`:'';}).join('');
+  const lg=STAGES.map(s=>`<div><span class="pill" style="padding:0;background:none;color:var(--muted);font-weight:500"><i style="background:${sv(s)}"></i>${esc(stageLabel(s))}</span><b>${C.filter(c=>c.stage===s).length}</b></div>`).join('');
   const people=[...S.team.map(t=>({name:t.name,role:t.role,t})),{name:'',role:'Needs an owner'}];
   const tm=people.map(p=>{const cs=C.filter(c=>(c.owner||'')===p.name).sort((a,b)=>STAGES.indexOf(a.stage)-STAGES.indexOf(b.stage));
     if(!p.name&&!cs.length) return '';
     const cap=p.t&&p.t.max_clients?` · ${cs.length} of ${p.t.max_clients}`:'';
     return `<div class="tmr" ${p.name?`data-go="team"`:''}>${av(p.name,1)}<div><div class="nm">${esc(p.name||'Unassigned')}</div><div class="rl">${esc(p.role||'')}${p.t&&p.t.hours_per_week?` · ${p.t.hours_per_week}h/week`:''}${cap}</div></div>
-      <div class="cl">${cs.map(c=>`<span class="mini" style="background:color-mix(in srgb,${sv(c.stage)} 13%,transparent);color:${sv(c.stage)}" title="${esc(c.stage)}">${esc(c.name)}</span>`).join('')}</div>
+      <div class="cl">${cs.map(c=>`<span class="mini" style="background:color-mix(in srgb,${sv(c.stage)} 13%,transparent);color:${sv(c.stage)}" title="${esc(stageLabel(c.stage))}">${esc(c.name)}</span>`).join('')}</div>
       <div class="n">${cs.length}</div></div>`;}).join('');
   return `
   <div class="hero"><div><h1>${hello}${myName()?', '+esc(myName()):''}</h1><p>${fmtY(iso(today()))} · ${flight} client${flight===1?'':'s'} in flight, ${due} to-do${due===1?'':'s'} due today or overdue</p></div></div>
@@ -561,10 +595,11 @@ function vOverview(){
 function vBoard(){
   const cols=STAGES.map(s=>{
     const cs=S.clients.filter(c=>c.stage===s).sort(bySort);
-    return `<div class="col" data-stage="${esc(s)}"><div class="colh"><span class="bar" style="background:${sv(s)}"></span>${esc(s)}<span class="n">${cs.length}</span></div>
+    return `<div class="col" data-stage="${esc(s)}"><div class="colh"><span class="bar" style="background:${sv(s)}"></span>${esc(stageLabel(s))}<span class="n">${cs.length}</span></div>
     ${cs.map(c=>`<div class="kc" draggable="true" data-id="${c.id}">
       <div class="nm">${esc(c.name)}</div>${c.status?`<div class="st">${esc(c.status)}</div>`:''}
       ${nextTask(c)?`<div class="nx">${ICON.arrow}<span>${nextText(c)}</span></div>`:''}
+      ${c.solution?`<div style="margin-top:8px">${solTag(c.solution)}</div>`:''}
       <div class="ft">${own(c.owner)}${dueHtml(c)}</div></div>`).join('')}</div>`;
   }).join('');
   return `<div class="hero"><div><h1>Board</h1><p>Drag a card to another column to change its stage, or onto another card to reorder.</p></div></div><div class="board">${cols}</div>`;
@@ -579,11 +614,12 @@ function filtered(){
     if(f.owner==='__none'&&c.owner) return false;
     if(f.owner&&f.owner!=='__none'&&c.owner!==f.owner) return false;
     if(f.action&&bucket(c)!==f.action) return false;
+    if(f.sol){ if(f.sol==='none'){ if(c.solution) return false; } else if(String(c.solution||'')!==f.sol) return false; }
     if(q){ const hay=[c.name,c.status,c.owner,...notesOf(c.id).map(n=>n.text),...S.tasks.filter(t=>t.client_id===c.id).map(t=>t.text),...meetingsOf(c.id).map(m=>m.title+' '+m.notes)].join(' ').toLowerCase(); if(!hay.includes(q)) return false; }
     return true;
   });
   const k=UI.sort.key,d=UI.sort.dir;
-  const val={name:c=>c.name.toLowerCase(),stage:c=>STAGES.indexOf(c.stage),owner:c=>(c.owner||'~').toLowerCase(),next:c=>{const t=nextTask(c);return t?(t.due_date||'9998'):'9999';},last:c=>{const n=lastNote(c.id);return n?n.date:'0000';}}[k];
+  const val={name:c=>c.name.toLowerCase(),stage:c=>STAGES.indexOf(c.stage),sol:c=>c.solution||9,owner:c=>(c.owner||'~').toLowerCase(),next:c=>{const t=nextTask(c);return t?(t.due_date||'9998'):'9999';},last:c=>{const n=lastNote(c.id);return n?n.date:'0000';}}[k];
   return L.sort((a,b)=>{const x=val(a),y=val(b);return (x<y?-1:x>y?1:0)*d || a.name.localeCompare(b.name);});
 }
 function vClients(){
@@ -591,21 +627,22 @@ function vClients(){
   const th=(k,l,cls='')=>`<th class="s ${cls} ${UI.sort.key===k?'on':''}" data-sort="${k}">${l}<span class="ar">${UI.sort.key===k?(UI.sort.dir>0?'↑':'↓'):'↕'}</span></th>`;
   const rows=L.map(c=>{const ln=lastNote(c.id);return `<tr data-open="${c.id}">
     <td><div class="nm">${esc(c.name)}</div>${c.status?`<div class="st">${esc(c.status)}</div>`:''}</td>
-    <td>${pill(c.stage)}</td><td>${own(c.owner)}</td>
+    <td>${pill(c.stage)}</td><td>${c.solution?solTag(c.solution):'<span style="color:var(--muted)">Not decided</span>'}</td><td>${own(c.owner)}</td>
     <td>${nextTask(c)?`<div>${nextText(c)}</div><div style="margin-top:3px">${dueHtml(c)}</div>`:'<span style="color:var(--muted)">None</span>'}</td>
     <td class="hm">${ln?`<div class="ln"><b style="color:var(--ink2);font-weight:600">${fmt(ln.date)}</b> · ${esc(ln.text)}</div>`:''}</td></tr>`;}).join('');
-  const active=f.q||f.stage||f.owner||f.action;
+  const active=f.q||f.stage||f.owner||f.action||f.sol;
   return `<div class="hero"><div><h1>Clients</h1><p>Full list with filters. Click a client to see its to-dos, meetings and notes.</p></div></div>
   <div class="card">
     <div class="fbar">
       <div class="search">${ICON.search}<input id="fq" placeholder="Search clients, to-dos, meetings or notes" value="${esc(f.q)}"></div>
-      <select class="sel ${f.stage?'act':''}" id="fs"><option value="">All stages</option>${STAGES.map(s=>`<option ${f.stage===s?'selected':''}>${esc(s)}</option>`).join('')}</select>
+      <select class="sel ${f.stage?'act':''}" id="fs"><option value="">All stages</option>${STAGES.map(s=>`<option value="${esc(s)}" ${f.stage===s?'selected':''}>${esc(stageLabel(s))}</option>`).join('')}</select>
+      <select class="sel ${f.sol?'act':''}" id="fsol"><option value="">All options</option>${[1,2,3,4].map(n=>`<option value="${n}" ${f.sol===String(n)?'selected':''}>${esc(solLabel(n))}</option>`).join('')}<option value="none" ${f.sol==='none'?'selected':''}>Not decided</option></select>
       <select class="sel ${f.action?'act':''}" id="fa">${Object.entries(ACTIONS).map(([k,v])=>`<option value="${k}" ${f.action===k?'selected':''}>${v}</option>`).join('')}</select>
       <select class="sel ${f.owner?'act':''}" id="fo"><option value="">All owners</option>${S.team.map(t=>`<option ${f.owner===t.name?'selected':''}>${esc(t.name)}</option>`).join('')}<option value="__none" ${f.owner==='__none'?'selected':''}>Unassigned</option></select>
       ${active?`<button class="btn ghost" id="fclr">Clear</button>`:''}
     </div>
-    <div class="tw"><table><thead><tr>${th('name','Client')}${th('stage','Stage')}${th('owner','Owner')}${th('next','Next action')}${th('last','Latest note','hm')}</tr></thead>
-    <tbody>${rows||`<tr><td colspan="5"><div class="empty">No clients match these filters.</div></td></tr>`}</tbody></table></div>
+    <div class="tw"><table><thead><tr>${th('name','Client')}${th('stage','Stage')}${th('sol','Option')}${th('owner','Owner')}${th('next','Next action')}${th('last','Latest note','hm')}</tr></thead>
+    <tbody>${rows||`<tr><td colspan="6"><div class="empty">No clients match these filters.</div></td></tr>`}</tbody></table></div>
     <div class="tfoot">Showing ${L.length} of ${S.clients.length} clients</div>
   </div>`;
 }
@@ -621,7 +658,7 @@ function vTeam(){
     const col=!max?'var(--muted)':pct>=100?'var(--bad)':pct>=70?'var(--warn)':'var(--ok)';
     const status=!max?'No capacity set':pct>=100?'At capacity':pct>=70?'Almost full':'Has room';
     return `<div class="card tc">
-      <div class="tch">${av(m.name,1)}<div style="flex:1"><div class="nm">${esc(m.name)}</div><div class="rl">${esc(m.role||'')}</div></div><button class="btn" data-member="${m.id}">Edit availability</button></div>
+      <div class="tch">${av(m.name,1)}<div style="flex:1"><div class="nm">${esc(m.name)}</div><div class="rl">${esc(m.role||'')}</div></div><button class="btn" data-member="${m.id}">Edit</button></div>
       <div class="avail"><span class="stt" style="color:${col};background:color-mix(in srgb,${col} 12%,transparent)">${status}</span><span>${m.hours_per_week?`<b>${m.hours_per_week}h</b> per week available`:'Hours not set'}</span></div>
       <div class="cap"><span style="width:${max?pct:0}%;background:${col}"></span></div>
       <div class="capl">${max?`${active} of ${max} active clients`:`${active} active client${active===1?'':'s'}`}</div>
@@ -633,7 +670,7 @@ function vTeam(){
   const un=S.clients.filter(c=>!c.owner);
   const unCard=un.length?`<div class="card tc"><div class="tch">${av('',1)}<div style="flex:1"><div class="nm">Unassigned</div><div class="rl">Clients waiting for an owner</div></div></div>
     <ul class="tclients">${un.map(c=>`<li data-open="${c.id}"><span>${esc(c.name)}</span>${pill(c.stage)}</li>`).join('')}</ul></div>`:'';
-  return `<div class="hero"><div><h1>Team</h1><p>Availability and workload per person. Active clients exclude implemented ones.</p></div></div>
+  return `<div class="hero"><div><h1>Team</h1><p>Availability and workload per person. Active clients exclude implemented ones.</p></div><button class="btn primary" data-member="new">${ICON.plus}Add member</button></div>
   <div class="tcards">${cards}${unCard}</div>`;
 }
 
@@ -651,7 +688,8 @@ function bindView(){
     $('#fs').onchange=e=>{UI.f.stage=e.target.value;render();};
     $('#fa').onchange=e=>{UI.f.action=e.target.value;render();};
     $('#fo').onchange=e=>{UI.f.owner=e.target.value;render();};
-    if($('#fclr')) $('#fclr').onclick=()=>{UI.f={q:'',stage:'',owner:'',action:''};render();};
+    $('#fsol').onchange=e=>{UI.f.sol=e.target.value;render();};
+    if($('#fclr')) $('#fclr').onclick=()=>{UI.f={q:'',stage:'',owner:'',action:'',sol:''};render();};
     document.querySelectorAll('[data-sort]').forEach(t=>t.onclick=()=>{const k=t.dataset.sort;UI.sort=UI.sort.key===k?{key:k,dir:-UI.sort.dir}:{key:k,dir:1};render();});
   }
   if(UI.tab==='board'){
@@ -714,18 +752,45 @@ function drawModal(){
       <div class="tlist">${L.map(t=>taskRow(t,false)).join('')}</div>`;
   }
   if(m.type==='member'){
-    const t=S.team.find(x=>x.id===m.id); if(!t){closeModal();return;}
-    el.innerHTML=`<div class="mh"><h3>${esc(t.name)}: availability</h3><button class="btn ghost" data-close>${ICON.x}</button></div>
-      <div class="row2" style="margin:14px 0">
+    const isNew=m.id==='new';
+    const t=isNew?{id:null,name:'',role:'Team',hours_per_week:null,max_clients:null,availability_note:''}:S.team.find(x=>x.id===m.id);
+    if(!t){closeModal();return;}
+    el.innerHTML=`<div class="mh"><h3>${isNew?'Add team member':esc(t.name)}</h3><button class="btn ghost" data-close>${ICON.x}</button></div>
+      <div class="row2" style="margin:14px 0 12px">
+        <div class="fld"><div class="lbl">Name</div><input id="mName" value="${esc(t.name)}" placeholder="First name"></div>
+        <div class="fld"><div class="lbl">Role</div><input id="mRole" value="${esc(t.role||'')}" placeholder="Team"></div>
+      </div>
+      <div class="row2" style="margin-bottom:12px">
         <div class="fld"><div class="lbl">Hours per week available</div><input id="mHours" type="number" min="0" step="1" value="${t.hours_per_week??''}" placeholder="e.g. 15"></div>
         <div class="fld"><div class="lbl">Max active clients</div><input id="mMax" type="number" min="0" step="1" value="${t.max_clients??''}" placeholder="e.g. 3"></div>
       </div>
       <div class="fld"><div class="lbl">Notes</div><textarea id="mNote" placeholder="Time off, month end, other projects…">${esc(t.availability_note||'')}</textarea></div>
-      <div class="mf"><button class="btn" data-close>Cancel</button><button class="btn primary" id="mSave">Save</button></div>`;
+      <div class="mf" style="justify-content:space-between"><div>${isNew?'':'<button class="btn danger" id="mDel">Remove member</button>'}</div><div style="display:flex;gap:8px"><button class="btn" data-close>Cancel</button><button class="btn primary" id="mSave">${isNew?'Add member':'Save'}</button></div></div>`;
+    setTimeout(()=>$(isNew?'#mName':'#mHours')&&$(isNew?'#mName':'#mHours').focus(),50);
     $('#mSave').onclick=async()=>{
       const num=v=>v===''?null:Math.max(0,Number(v));
-      const upd={...t,hours_per_week:num($('#mHours').value),max_clients:num($('#mMax').value),availability_note:$('#mNote').value.trim()};
-      try{ const s=await persist(()=>DB.saveMember(upd)); Object.assign(t,upd,s); closeModal(); render(); toast('Availability saved'); }catch(e){}
+      const name=$('#mName').value.trim(); if(!name){toast('Name is required');$('#mName').focus();return;}
+      if(S.team.some(x=>x.id!==t.id&&x.name.toLowerCase()===name.toLowerCase())){toast('There is already a member with that name');return;}
+      const upd={...t,name,role:$('#mRole').value.trim()||'Team',hours_per_week:num($('#mHours').value),max_clients:num($('#mMax').value),availability_note:$('#mNote').value.trim(),sort:isNew?Math.max(0,...S.team.map(x=>x.sort||0))+1:t.sort};
+      try{
+        const old=t.name;
+        const s2=await persist(()=>DB.saveMember(upd));
+        if(isNew) S.team.push({...upd,...s2});
+        else{
+          Object.assign(t,upd,s2);
+          if(old&&old!==name){ await persist(()=>DB.renameOwner(old,name)); S.clients.forEach(c=>{if(c.owner===old)c.owner=name;}); }
+        }
+        closeModal(); render(); toast(isNew?'Member added':'Saved');
+      }catch(e){}
+    };
+    if(!isNew) $('#mDel').onclick=async()=>{
+      const n=S.clients.filter(c=>c.owner===t.name).length;
+      if(!confirm(`Remove ${t.name} from the team?${n?` Their ${n} client${n===1?'':'s'} will become unassigned.`:''}`)) return;
+      try{
+        if(n){ await persist(()=>DB.clearOwner(t.name)); S.clients.forEach(c=>{if(c.owner===t.name)c.owner=null;}); }
+        await persist(()=>DB.deleteMember(t.id)); S.team=S.team.filter(x=>x.id!==t.id);
+        closeModal(); render(); toast('Member removed');
+      }catch(e){}
     };
   }
   el.querySelectorAll('[data-close]').forEach(b=>b.onclick=closeModal);
@@ -742,7 +807,7 @@ async function moveClient(id,stage,beforeId){
   render();
   try{
     await persist(()=>DB.saveOrders(ups));
-    if(changed){ const n=await persist(()=>DB.addNote({client_id:id,date:iso(today()),text:`Stage changed to ${stage}`})); S.notes.push(n); render(); toast(`${c.name} moved to ${stage}`); }
+    if(changed){ const n=await persist(()=>DB.addNote({client_id:id,date:iso(today()),text:`Stage changed to ${stageLabel(stage)}`})); S.notes.push(n); render(); toast(`${c.name} moved to ${stageLabel(stage)}`); }
   }catch(e){}
 }
 
@@ -750,7 +815,7 @@ async function moveClient(id,stage,beforeId){
 const DTABS=[['details','Details'],['todos','To-dos'],['meetings','Meetings'],['notes','Notes']];
 function openDrawer(id,tab){
   const src=id?byId(id):null; if(id&&!src) return;
-  D={c:src?{...src}:{id:null,name:'',owner:null,stage:STAGES[0],status:'',sort_order:0},tab:src&&DTABS.some(t=>t[0]===tab)?tab:'details',editMeeting:null};
+  D={c:src?{...src}:{id:null,name:'',owner:null,stage:STAGES[0],status:'',solution:null,notepad:'',sort_order:0},tab:src&&DTABS.some(t=>t[0]===tab)?tab:'details',editMeeting:null,editTask:null};
   $('#drawer').innerHTML=`
     <div class="dh"><input id="dName" placeholder="Client name" value="${esc(D.c.name)}"><button class="btn ghost" id="dX" title="Close">${ICON.x}</button></div>
     <div class="dtabs" id="dTabs"></div>
@@ -762,39 +827,68 @@ function openDrawer(id,tab){
   if(!id) setTimeout(()=>$('#dName').focus(),200);
   $('#dX').onclick=$('#dCancel').onclick=closeDrawer;
   $('#dSave').onclick=saveDrawer;
-  if(id) $('#dDel').onclick=async()=>{ if(!confirm(`Delete ${src.name} with its to-dos, meetings and notes?`)) return; try{await persist(()=>DB.deleteClient(id));S.clients=S.clients.filter(x=>x.id!==id);['notes','tasks','meetings'].forEach(k=>S[k]=S[k].filter(n=>n.client_id!==id));closeDrawer();render();toast('Client deleted');}catch(e){} };
+  if(id) $('#dDel').onclick=async()=>{ if(!confirm(`Delete ${src.name} with its to-dos, meetings and notes?`)) return; try{await persist(()=>DB.deleteClient(id));S.clients=S.clients.filter(x=>x.id!==id);['notes','tasks','meetings'].forEach(k=>S[k]=S[k].filter(n=>n.client_id!==id));D=null;$('#scrim').classList.remove('show');$('#drawer').classList.remove('show');render();toast('Client deleted');}catch(e){} };
 }
 function syncDetails(){ if(D&&D.tab==='details'&&$('#dOwner')){ D.c.owner=$('#dOwner').value||null; D.c.status=$('#dStatus').value; } }
+
+/* anything typed but not added yet is saved when you switch tabs, save or close */
+function flushPending(){
+  if(!D||!D.c.id) return Promise.resolve();
+  const cid=D.c.id, jobs=[];
+  const tt=$('#tText'), nt=$('#nText'), pad=$('#padText');
+  if(tt&&tt.value.trim()){ const text=tt.value.trim(), due=($('#tDate')||{}).value||null; tt.value=''; jobs.push(addTaskFor(cid,text,due)); }
+  if(nt&&nt.value.trim()){ const text=nt.value.trim(), d=($('#nDate')||{}).value||iso(today()); nt.value=''; jobs.push(addNoteFor(cid,text,d)); }
+  if(pad&&padTimer){ clearTimeout(padTimer); padTimer=null; jobs.push(savePad(cid,pad.value)); }
+  return Promise.all(jobs);
+}
+async function addTaskFor(cid,text,due){ try{ const t=await persist(()=>DB.saveTask({client_id:cid,text,due_date:due||null,done:false})); S.tasks.push(t); refreshAll(); }catch(e){} }
+async function addNoteFor(cid,text,date){ try{ const n=await persist(()=>DB.addNote({client_id:cid,date:date||iso(today()),text})); S.notes.push(n); refreshAll(); }catch(e){} }
+let padTimer=null;
+async function savePad(cid,val){
+  const c=byId(cid); if(!c||c.notepad===val) return;
+  try{ const r=await persist(()=>DB.saveClientField(cid,{notepad:val})); c.notepad=val; if(D&&D.c.id===cid) D.c.notepad=val; const st=$('#padState'); if(st&&D&&D.c.id===cid) st.textContent='Saved'; }catch(e){}
+}
+
 function drawTabs(){
   const id=D.c.id;
   const cnt={todos:id?openTasks(id).length:0,meetings:id?meetingsOf(id).length:0,notes:id?notesOf(id).length:0};
   $('#dTabs').innerHTML=DTABS.map(([k,l])=>`<button data-dt="${k}" class="${D.tab===k?'on':''}" ${!id&&k!=='details'?'disabled title="Save the client first"':''}>${l}${cnt[k]?`<span class="cnt">${cnt[k]}</span>`:''}</button>`).join('');
-  document.querySelectorAll('[data-dt]').forEach(b=>b.onclick=()=>{ if(b.disabled) return; syncDetails(); D.tab=b.dataset.dt; drawTabs(); drawBody(); });
+  document.querySelectorAll('[data-dt]').forEach(b=>b.onclick=async()=>{ if(b.disabled) return; syncDetails(); flushPending(); D.tab=b.dataset.dt; D.editTask=null; drawTabs(); drawBody(); });
 }
 function drawBody(){
   const c=D.c, b=$('#dBody');
   if(D.tab==='details'){
     b.innerHTML=`<div class="sec"><div class="lbl">Stage</div><div class="stg" id="dStage"></div></div>
-      <div class="sec fld"><div class="lbl">Owner</div><select id="dOwner"><option value="">Unassigned</option>${S.team.map(t=>`<option ${t.name===c.owner?'selected':''}>${esc(t.name)}</option>`).join('')}</select></div>
-      <div class="sec fld"><div class="lbl">Current status</div><textarea id="dStatus" placeholder="One line shown under the client name">${esc(c.status)}</textarea></div>
+      <div class="sec"><div class="lbl">Solution option</div><div class="sol" id="dSol"></div></div>
+      <div class="sec fld"><div class="lbl">Owner</div><select id="dOwner"><option value="">Unassigned</option>${S.team.map(t=>`<option ${t.name===c.owner?'selected':''}>${esc(t.name)}</option>`).join('')}${c.owner&&!S.team.some(t=>t.name===c.owner)?`<option selected>${esc(c.owner)}</option>`:''}</select></div>
+      <div class="sec fld"><div class="lbl">Current status</div><textarea id="dStatus" placeholder="One line shown under the client name">${esc(c.status)}</textarea><div class="hint" style="font-size:12px">When you change it, the previous status stays in Notes.</div></div>
       ${c.id?`<div class="sec"><div class="lbl">Next action</div><div class="hint">${nextTask(c)?`${nextText(c)} ${dueHtml(c)}`:'No open to-dos.'} <a href="#" id="goTodos">Manage to-dos</a></div></div>`:'<div class="hint">After adding the client you can add its to-dos, meetings and notes.</div>'}`;
-    drawStages();
+    drawStages(); drawSol();
     if($('#goTodos')) $('#goTodos').onclick=e=>{e.preventDefault();syncDetails();D.tab='todos';drawTabs();drawBody();};
   }
   if(D.tab==='todos'){
-    b.innerHTML=`<div class="addn"><input id="tText" placeholder="New to-do and press Enter"><input id="tDate" type="date" style="flex:0 0 150px"></div>
+    b.innerHTML=`<div class="addrow"><input id="tText" placeholder="New to-do"><input id="tDate" type="date"><button class="btn primary" id="tAdd">Add</button></div>
       <div class="tlist" id="dTasks"></div>`;
-    $('#tText').onkeydown=async e=>{ if(e.key!=='Enter') return; e.preventDefault();
-      const text=$('#tText').value.trim(); if(!text) return; const due=$('#tDate').value||null; $('#tText').value='';
-      try{ const t=await persist(()=>DB.saveTask({client_id:c.id,text,due_date:due,done:false})); S.tasks.push(t); refreshAll(); }catch(err){} };
+    const add=()=>{ const text=$('#tText').value.trim(); if(!text){$('#tText').focus();return;} const due=$('#tDate').value||null; $('#tText').value=''; $('#tDate').value=''; addTaskFor(c.id,text,due); $('#tText').focus(); };
+    $('#tAdd').onclick=add;
+    $('#tText').onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); add(); } };
+    $('#tDate').onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); add(); } };
   }
   if(D.tab==='meetings'){
     b.innerHTML=`<div class="mform" id="mForm"></div><div id="dMeetings"></div>`;
     drawMeetingForm();
   }
   if(D.tab==='notes'){
-    b.innerHTML=`<div class="addn"><input id="nText" placeholder="Add a note and press Enter"><input id="nDate" type="date" value="${iso(today())}" style="flex:0 0 150px"></div><ul class="tl" id="dNotes"></ul>`;
-    $('#nText').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();addNote();}};
+    b.innerHTML=`<div class="sec"><div class="lbl" style="display:flex;justify-content:space-between">Notepad <span id="padState" style="text-transform:none;letter-spacing:0;font-weight:500">${c.notepad?'Saved':'Saves as you type'}</span></div>
+        <textarea id="padText" class="pad" placeholder="Running notes for this client. Everything you type is saved automatically.">${esc(c.notepad||'')}</textarea></div>
+      <div class="lbl">Activity log</div>
+      <div class="addrow"><textarea id="nText" rows="2" placeholder="Add a dated entry (Enter to add, Shift+Enter for a new line)"></textarea><input id="nDate" type="date" value="${iso(today())}"><button class="btn primary" id="nAdd">Add</button></div>
+      <ul class="tl" id="dNotes"></ul>`;
+    const pad=$('#padText');
+    pad.oninput=()=>{ $('#padState').textContent='Saving…'; clearTimeout(padTimer); const cid=c.id, v=pad.value; padTimer=setTimeout(()=>{padTimer=null;savePad(cid,v);},700); };
+    const add=()=>{ const text=$('#nText').value.trim(); if(!text){$('#nText').focus();return;} const d=$('#nDate').value||iso(today()); $('#nText').value=''; addNoteFor(c.id,text,d); $('#nText').focus(); };
+    $('#nAdd').onclick=add;
+    $('#nText').onkeydown=e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); add(); } };
   }
   drawLists();
 }
@@ -804,8 +898,16 @@ function drawLists(){
   const id=D.c.id;
   if(D.tab==='todos'&&$('#dTasks')){
     const o=openTasks(id), d=doneTasks(id);
-    $('#dTasks').innerHTML=(o.length?o.map(t=>taskRow(t,true)).join(''):'<div class="empty" style="text-align:left;padding:8px 0">No open to-dos.</div>')
+    const row=t=>D.editTask===t.id?`<div class="task editing"><input id="eText" value="${esc(t.text)}"><input id="eDate" type="date" value="${esc(t.due_date||'')}"><button class="btn primary sm" id="eSave">Save</button><button class="btn sm" id="eCancel">Cancel</button></div>`:taskRow(t,true);
+    $('#dTasks').innerHTML=(o.length?o.map(row).join(''):'<div class="empty" style="text-align:left;padding:8px 0">No open to-dos.</div>')
       +(d.length?`<details class="donebox"><summary>Completed (${d.length})</summary>${d.map(t=>taskRow(t,true)).join('')}</details>`:'');
+    document.querySelectorAll('#dTasks [data-edittask]').forEach(x=>x.onclick=()=>{D.editTask=x.dataset.edittask;drawLists();setTimeout(()=>$('#eText')&&$('#eText').focus(),20);});
+    if($('#eSave')){
+      const t=S.tasks.find(x=>x.id===D.editTask);
+      const save=async()=>{ const text=$('#eText').value.trim(); if(!text){toast('The to-do needs a text');return;} const upd={...t,text,due_date:$('#eDate').value||null}; D.editTask=null; try{const s2=await persist(()=>DB.saveTask(upd)); Object.assign(t,upd,s2); refreshAll(); toast('To-do updated');}catch(e){} };
+      $('#eSave').onclick=save; $('#eCancel').onclick=()=>{D.editTask=null;drawLists();};
+      $('#eText').onkeydown=e=>{ if(e.key==='Enter'){e.preventDefault();save();} if(e.key==='Escape'){e.stopPropagation();D.editTask=null;drawLists();} };
+    }
   }
   if(D.tab==='meetings'&&$('#dMeetings')){
     const L=meetingsOf(id);
@@ -825,25 +927,25 @@ function drawMeetingForm(){
   $('#mAdd').onclick=async()=>{
     const row={id:m?m.id:undefined,created_at:m?m.created_at:undefined,client_id:D.c.id,date:$('#mDate').value||iso(today()),title:$('#mTitle').value.trim(),notes:$('#mNotes').value.trim()};
     if(!row.title&&!row.notes){toast('Add a title or what was discussed');return;}
-    try{ const s=await persist(()=>DB.saveMeeting(row)); if(m) Object.assign(m,s); else S.meetings.push(s); D.editMeeting=null; drawMeetingForm(); drawLists(); render(); toast(m?'Meeting updated':'Meeting logged'); }catch(e){}
+    try{ const s2=await persist(()=>DB.saveMeeting(row)); if(m) Object.assign(m,s2); else S.meetings.push(s2); D.editMeeting=null; drawMeetingForm(); drawLists(); render(); toast(m?'Meeting updated':'Meeting logged'); }catch(e){}
   };
 }
 function drawStages(){
-  $('#dStage').innerHTML=STAGES.map(s=>{const on=s===D.c.stage;return `<button data-st="${esc(s)}" class="${on?'on':''}" style="${on?`background:color-mix(in srgb,${sv(s)} 15%,transparent);color:${sv(s)}`:''}"><i style="background:${sv(s)}"></i>${esc(s)}</button>`;}).join('');
+  $('#dStage').innerHTML=STAGES.map(s=>{const on=s===D.c.stage;return `<button data-st="${esc(s)}" class="${on?'on':''}" style="${on?`background:color-mix(in srgb,${sv(s)} 15%,transparent);color:${sv(s)}`:''}"><i style="background:${sv(s)}"></i>${esc(stageLabel(s))}</button>`;}).join('');
   document.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{D.c.stage=b.dataset.st;drawStages();});
+}
+function drawSol(){
+  const opts=[[null,'Not decided',''],[1,'Option 1','Live dashboard'],[2,'Option 2','Upload dashboard'],[3,'Option 3','Claude skill'],[4,'Option 4','']];
+  $('#dSol').innerHTML=opts.map(([n,l,sub])=>`<button data-sol="${n??''}" class="${(D.c.solution||null)===n?'on':''}"><b>${l}</b>${sub?`<span>${sub}</span>`:''}</button>`).join('');
+  document.querySelectorAll('[data-sol]').forEach(b=>b.onclick=()=>{D.c.solution=b.dataset.sol?Number(b.dataset.sol):null;drawSol();});
 }
 function drawNotes(){
   const list=notesOf(D.c.id);
-  $('#dNotes').innerHTML=list.length?list.map(n=>`<li><div class="d">${fmtY(n.date)}${n.created_by&&n.created_by!=='seed'?` · ${esc(n.created_by.split('@')[0])}`:''}<button class="x" data-dn="${n.id}" title="Remove">×</button></div><div class="t">${esc(n.text)}</div></li>`).join(''):'<div class="empty" style="text-align:left;padding:4px 0">No notes yet</div>';
+  $('#dNotes').innerHTML=list.length?list.map(n=>`<li><div class="d">${fmtY(n.date)}${n.created_by&&!['seed','migrated'].includes(n.created_by)?` · ${esc(n.created_by.split('@')[0])}`:''}<button class="x" data-dn="${n.id}" title="Remove">×</button></div><div class="t">${esc(n.text)}</div></li>`).join(''):'<div class="empty" style="text-align:left;padding:4px 0">No entries yet</div>';
   document.querySelectorAll('[data-dn]').forEach(b=>b.onclick=async()=>{
     const nid=b.dataset.dn;
     try{await persist(()=>DB.deleteNote(nid));S.notes=S.notes.filter(n=>n.id!==nid);drawLists();render();}catch(e){}
   });
-}
-async function addNote(){
-  const t=$('#nText').value.trim(), d=$('#nDate').value||iso(today()); if(!t) return;
-  $('#nText').value='';
-  try{const n=await persist(()=>DB.addNote({client_id:D.c.id,date:d,text:t}));S.notes.push(n);drawLists();render();}catch(e){}
 }
 async function saveDrawer(){
   syncDetails();
@@ -851,18 +953,20 @@ async function saveDrawer(){
   c.name=$('#dName').value.trim(); if(!c.name){toast('Client name is required');$('#dName').focus();return;}
   c.status=(c.status||'').trim();
   const prev=c.id?byId(c.id):null;
-  const oldStage=prev?prev.stage:null;
+  const oldStage=prev?prev.stage:null, oldStatus=prev?(prev.status||''):'';
+  await flushPending();
   try{
     if(!prev||oldStage!==c.stage){ c.sort_order=(Math.max(0,...S.clients.filter(x=>x.stage===c.stage&&x.id!==c.id).map(x=>x.sort_order||0)))+10; }
     const saved=await persist(()=>DB.saveClient(c));
-    if(prev) Object.assign(prev,saved); else S.clients.push(saved);
-    if(prev&&oldStage!==saved.stage){ const n=await persist(()=>DB.addNote({client_id:saved.id,date:iso(today()),text:`Stage changed to ${saved.stage}`})); S.notes.push(n); }
+    if(prev) Object.assign(prev,saved); else S.clients.push({notepad:'',...saved});
+    if(prev&&oldStage!==saved.stage){ const n=await persist(()=>DB.addNote({client_id:saved.id,date:iso(today()),text:`Stage changed to ${stageLabel(saved.stage)}`})); S.notes.push(n); }
+    if(prev&&oldStatus!==c.status&&c.status){ const n=await persist(()=>DB.addNote({client_id:saved.id,date:iso(today()),text:`Status: ${c.status}`})); S.notes.push(n); }
     render();
     if(prev){ closeDrawer(); toast('Saved'); }
     else { openDrawer(saved.id,'todos'); toast('Client added. Add its first to-dos.'); }
   }catch(e){}
 }
-function closeDrawer(){ $('#scrim').classList.remove('show'); $('#drawer').classList.remove('show'); D=null; }
+function closeDrawer(){ flushPending(); $('#scrim').classList.remove('show'); $('#drawer').classList.remove('show'); D=null; }
 $('#scrim').onclick=closeDrawer;
 $('#mscrim').onclick=e=>{ if(e.target.id==='mscrim') closeModal(); };
 document.addEventListener('keydown',e=>{ if(e.key!=='Escape') return; if(UI.modal) closeModal(); else if(D) closeDrawer(); });
@@ -871,7 +975,7 @@ document.addEventListener('keydown',e=>{ if(e.key!=='Escape') return; if(UI.moda
 function renderPrint(){
   const C=S.clients;
   const g=STAGES.map(s=>{const cs=C.filter(c=>c.stage===s).sort(bySort); if(!cs.length) return '';
-    return `<tr class="g"><td colspan="4">${esc(s)} (${cs.length})</td></tr>`+cs.map(c=>{const o=openTasks(c.id);return `<tr><td><b>${esc(c.name)}</b><br>${esc(c.status)}</td><td>${esc(c.owner||'Unassigned')}</td>
+    return `<tr class="g"><td colspan="4">${esc(stageLabel(s))} (${cs.length})</td></tr>`+cs.map(c=>{const o=openTasks(c.id);return `<tr><td><b>${esc(c.name)}</b>${c.solution?` · Option ${c.solution}`:''}<br>${esc(c.status)}</td><td>${esc(c.owner||'Unassigned')}</td>
       <td>${o.length?`<ul>${o.slice(0,3).map(t=>`<li>${esc(t.text)}${t.due_date?`, ${fmt(t.due_date)}`:''}${dueOfDate(t.due_date)&&['over','today'].includes(dueOfDate(t.due_date).k)?` (${dueOfDate(t.due_date).t})`:''}</li>`).join('')}</ul>`:'None'}</td>
       <td><ul>${notesOf(c.id).slice(0,3).map(n=>`<li>${fmt(n.date)}: ${esc(n.text)}</li>`).join('')}</ul></td></tr>`;}).join('');}).join('');
   $('#print').innerHTML=`<h1>Cash Flow Pod, Client Status Report</h1><div class="m">As of ${fmtY(iso(today()))}</div>
@@ -911,7 +1015,7 @@ function loginScreen(sb){
 }
 async function boot(){
   if(!CFG.supabaseUrl||!CFG.supabaseAnonKey||!window.supabase){
-    DEMO=true; DB=Demo; S=await DB.load(); shell(); render(); return;
+    DEMO=true; DB=Demo; S=fix(await DB.load()); shell(); render(); return;
   }
   const sb=window.supabase.createClient(CFG.supabaseUrl,CFG.supabaseAnonKey);
   window.supabase_client=sb;
@@ -925,7 +1029,7 @@ async function boot(){
     $('#lOut').onclick=async()=>{await sb.auth.signOut();location.reload();}; return;
   }
   DB=Supa(sb);
-  try{ S=await DB.load(); }catch(e){ authScreen(`<h1>Could not load data</h1><p>${esc(e.message)}</p>`); return; }
+  try{ S=fix(await DB.load()); }catch(e){ authScreen(`<h1>Could not load data</h1><p>${esc(e.message)}</p>`); return; }
   shell(); render(); DB.subscribe(reload);
 }
 boot();
