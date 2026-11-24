@@ -14,7 +14,7 @@
   --brand:#3b5bdb; --brand2:#7048e8; --brandink:#ffffff; --ring:rgba(59,91,219,.25);
   --ok:#0f9d63; --okbg:#e3f6ee; --warn:#b76e00; --warnbg:#fff4e0; --bad:#d23b2f; --badbg:#fdebe9; --info:#3b5bdb; --infobg:#eaefff;
   --sh1:0 1px 2px rgba(17,24,39,.05),0 1px 3px rgba(17,24,39,.04); --sh2:0 12px 32px rgba(17,24,39,.10),0 2px 6px rgba(17,24,39,.06);
-  --s0:#7c5cdb; --s1:#3b5bdb; --s2:#0c95a8; --s3:#d38b00; --s4:#5f3dc4; --s5:#c2255c; --s6:#e0602b; --s7:#a85d00; --s8:#0f9d63;
+  --s0:#7c5cdb; --s1:#3b5bdb; --s2:#0c95a8; --s3:#d38b00; --s4:#5f3dc4; --s5:#c2255c; --s6:#e0602b; --s7:#a85d00; --s8:#0f9d63; --s9:#868e96; --s10:#495057;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
@@ -22,7 +22,7 @@
     --brand:#7b96f5; --brand2:#a68af5; --brandink:#0c0e13; --ring:rgba(123,150,245,.3);
     --ok:#46c98d; --okbg:#10291e; --warn:#f2b552; --warnbg:#2e220d; --bad:#f37d72; --badbg:#36150f; --info:#7b96f5; --infobg:#18213d;
     --sh1:0 1px 2px rgba(0,0,0,.4); --sh2:0 16px 40px rgba(0,0,0,.55);
-    --s0:#a68af5; --s1:#7b96f5; --s2:#3cc6d8; --s3:#f2b552; --s4:#a594f9; --s5:#f06595; --s6:#f58c5c; --s7:#e0a458; --s8:#46c98d;
+    --s0:#a68af5; --s1:#7b96f5; --s2:#3cc6d8; --s3:#f2b552; --s4:#a594f9; --s5:#f06595; --s6:#f58c5c; --s7:#e0a458; --s8:#46c98d; --s9:#adb5bd; --s10:#8a929b;
   }
 }
 *{box-sizing:border-box}
@@ -126,7 +126,7 @@ button{font:inherit;color:inherit}
 .mini{font-size:11px;padding:2px 8px;border-radius:999px;font-weight:600}
 
 /* board */
-.board{display:grid;grid-template-columns:repeat(9,minmax(210px,1fr));gap:12px;overflow-x:auto;padding-bottom:6px}
+.board{display:grid;grid-template-columns:repeat(11,minmax(210px,1fr));gap:12px;overflow-x:auto;padding-bottom:6px}
 .col{background:var(--bg2);border-radius:13px;padding:10px;min-height:300px;display:flex;flex-direction:column;gap:9px;border:1px solid transparent;transition:border-color .12s,background .12s}
 .col.over{border-color:var(--brand);background:color-mix(in srgb,var(--brand) 6%,var(--bg2))}
 .colh{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;padding:4px 4px 6px}
@@ -349,8 +349,9 @@ td .ln{font-size:12.5px;color:var(--muted);max-width:260px}
 <script>
 /* ---------- constants ---------- */
 const CFG = window.TRACKER_CONFIG || {};
-const STAGES = ['Requested info','Info received, assigned to the team','First draft sent','Follow up','Sent new version','Need to host','Testing','Testing, follow up','Implemented'];
-const SVAR = ['--s0','--s1','--s2','--s3','--s4','--s5','--s6','--s7','--s8'];
+const STAGES = ['Requested info','Info received, assigned to the team','First draft sent','Follow up','Sent new version','Need to host','Testing','Testing, follow up','Implemented','On hold','Not available for cash flow automation'];
+const PARKED = ['Implemented','On hold','Not available for cash flow automation'];
+const SVAR = ['--s0','--s1','--s2','--s3','--s4','--s5','--s6','--s7','--s8','--s9','--s10'];
 const AV = ['#3b5bdb','#7048e8','#0c95a8','#d9480f','#2b8a3e','#c2255c','#5f3dc4','#e67700'];
 const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const ICON = {
@@ -558,7 +559,7 @@ function clientOptions(sel){ return [...S.clients].sort((a,b)=>a.name.localeComp
 function vOverview(){
   const C=S.clients, n=C.length;
   const impl=C.filter(c=>c.stage==='Implemented').length;
-  const flight=n-impl;
+  const flight=C.filter(c=>!PARKED.includes(c.stage)).length;
   const due=dueTasks().length, week=weekTasks().length;
   const un=C.filter(c=>!c.owner).length;
   const open=openTasks();
@@ -651,7 +652,7 @@ function vClients(){
 function vTeam(){
   const cards=S.team.map(m=>{
     const cs=S.clients.filter(c=>c.owner===m.name).sort((a,b)=>STAGES.indexOf(a.stage)-STAGES.indexOf(b.stage));
-    const active=cs.filter(c=>c.stage!=='Implemented').length;
+    const active=cs.filter(c=>!PARKED.includes(c.stage)).length;
     const tasks=S.tasks.filter(t=>!t.done&&cs.some(c=>c.id===t.client_id));
     const over=tasks.filter(t=>t.due_date&&t.due_date<iso(today())).length;
     const max=m.max_clients||0, pct=max?Math.min(100,Math.round(active/max*100)):0;
@@ -670,7 +671,7 @@ function vTeam(){
   const un=S.clients.filter(c=>!c.owner);
   const unCard=un.length?`<div class="card tc"><div class="tch">${av('',1)}<div style="flex:1"><div class="nm">Unassigned</div><div class="rl">Clients waiting for an owner</div></div></div>
     <ul class="tclients">${un.map(c=>`<li data-open="${c.id}"><span>${esc(c.name)}</span>${pill(c.stage)}</li>`).join('')}</ul></div>`:'';
-  return `<div class="hero"><div><h1>Team</h1><p>Availability and workload per person. Active clients exclude implemented ones.</p></div><button class="btn primary" data-member="new">${ICON.plus}Add member</button></div>
+  return `<div class="hero"><div><h1>Team</h1><p>Availability and workload per person. Active clients exclude implemented, on hold and not available ones.</p></div><button class="btn primary" data-member="new">${ICON.plus}Add member</button></div>
   <div class="tcards">${cards}${unCard}</div>`;
 }
 
